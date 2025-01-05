@@ -29,59 +29,64 @@ void setup() {
   pwm.setPWMFreq(90); // Analog servos run at 50 Hz
   delay(10);
 
-  pwm.setPWM(shoulder1, 0, angleToPulse(120));
+  pwm.setPWM(shoulder1, 0, angleToPulse(0));
 //  delay(1000);
-  pwm.setPWM(shoulder2, 0, angleToPulse(60));
-    delay(3000);
+  pwm.setPWM(shoulder2, 0, angleToPulse(180));
+//    delay(3000);
   pwm.setPWM(farm, 0, angleToPulse(0));
-    delay(1000);
-  pwm.setPWM(grip, 0, angleToPulse(90));
-  pwm.setPWM(base, 0, angleToPulse(0));
+//    delay(1000);
+  pwm.setPWM(grip, 0, angleToPulse(0));
+  pwm.setPWM(base, 0, angleToPulse(120));
 
 
 }
 
 void loop() {
+  
+  for (int i = 0; i <= 180; i += 5) {
+    pwm.setPWM(shoulder1, 0, angleToPulse(i));
+    pwm.setPWM(shoulder2, 0, angleToPulse(180 - i));
 
-for(int i=90; i>=0; i-=5){
-  pwm.setPWM(grip, 0, angleToPulse(i));
+    delay(150);
+  }
+
+  delay(5000);
+
+  for(int i=0; i<=90; i+=5){
+  pwm.setPWM(farm, 0, angleToPulse(i));
   delay(100);
-}
+  }
 
-delay(3000);
+delay(5000);
+  
+  for (int i = 180; i >= 0; i -= 5) {
+    pwm.setPWM(shoulder1, 0, angleToPulse(i));
+    pwm.setPWM(shoulder2, 0, angleToPulse(180 - i));
 
-for(int i=0; i<=90; i+=5){
+    delay(150);
+    
+  }
+  
+  delay(5000);
+
+  for (int i = 0; i <= 90; ++i) {
+    pwm.setPWM(grip, i, angleToPulse(i));
+    delay(100);
+  }
+
+  delay(2000);
+
+  for (int i = 90; i >= 0; --i) {
+    pwm.setPWM(grip, i, angleToPulse(i));
+    delay(100);
+  }
+  delay(2000);
+
+  for(int i=90; i>=0; i-=5){
   pwm.setPWM(farm, 0, angleToPulse(i));
   delay(100);
 }
 
 delay(5000);
-
-for(int i=0; i<=90; i+=5){
-  pwm.setPWM(base, 0, angleToPulse(i));
-  delay(100);
-}
-
-for(int i=90; i>=0; i-=5){
-  pwm.setPWM(base, 0, angleToPulse(i));
-  delay(100);
-}
-
-for(int i=90; i>=0; i-=5){
-  pwm.setPWM(farm, 0, angleToPulse(i));
-  delay(100);
-}
-
-delay(2000);
-
-for(int i=0; i<=90; i+=5){
-  pwm.setPWM(grip, 0, angleToPulse(i));
-  delay(100);
-}
-
-delay(1000);
-
-
-
 
 }
