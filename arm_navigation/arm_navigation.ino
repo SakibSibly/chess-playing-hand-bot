@@ -5,11 +5,12 @@
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 // Define servo channels
-#define shoulder1 0
-#define shoulder2 1
-#define farm 2
-#define grip 3
-#define base 4
+#define base 0
+#define shoulder1 1
+#define shoulder2 2
+#define farm 3
+#define grip 4
+
 
 
 // Define the pulse length range for the servos
@@ -28,65 +29,80 @@ void setup() {
   pwm.begin();
   pwm.setPWMFreq(90); // Analog servos run at 50 Hz
   delay(10);
+  
+  pwm.setPWM(base, 0, angleToPulse(100));
+  int ii = 0;
+  pwm.setPWM(shoulder1, 0, angleToPulse(ii));
 
-  pwm.setPWM(shoulder1, 0, angleToPulse(0));
-//  delay(1000);
-  pwm.setPWM(shoulder2, 0, angleToPulse(180));
-//    delay(3000);
-  pwm.setPWM(farm, 0, angleToPulse(0));
-//    delay(1000);
+  pwm.setPWM(shoulder2, 0, angleToPulse(180-ii));
+
+  pwm.setPWM(farm, 0, angleToPulse(100));
+
   pwm.setPWM(grip, 0, angleToPulse(0));
-  pwm.setPWM(base, 0, angleToPulse(120));
+
 
 
 }
 
-void loop() {
+void loop() { 
+
+  for (int i = 100; i <= 160; i += 5) {
+    pwm.setPWM(base, 0, angleToPulse(i));
+    delay(150);
+  }
+  delay(3000);
   
-  for (int i = 0; i <= 180; i += 5) {
+  for (int i = 0; i <= 30; i += 5) {
     pwm.setPWM(shoulder1, 0, angleToPulse(i));
     pwm.setPWM(shoulder2, 0, angleToPulse(180 - i));
 
     delay(150);
   }
 
-  delay(5000);
+  delay(3000);
 
-  for(int i=0; i<=90; i+=5){
-  pwm.setPWM(farm, 0, angleToPulse(i));
-  delay(100);
+  for(int i = 100; i <= 155; i += 5) {
+    pwm.setPWM(farm, 0, angleToPulse(i));
+    delay(100);
   }
 
-delay(5000);
+  delay(3000);
+
+  for (int i = 0; i <= 25; i += 5) {
+    pwm.setPWM(grip, 0, angleToPulse(i));
+    delay(150);
+  }
   
-  for (int i = 180; i >= 0; i -= 5) {
+  delay(3000);
+
+    for (int i = 25; i >= 0; i -= 5) {
+    pwm.setPWM(grip, 0, angleToPulse(i));
+    delay(150);
+  }
+  
+  delay(3000);
+
+    for(int i = 155; i >= 100; i -= 5) {
+    pwm.setPWM(farm, 0, angleToPulse(i));
+    delay(100);
+  }
+
+  delay(3000);
+
+  for (int i = 30; i >= 0; i -= 5) {
     pwm.setPWM(shoulder1, 0, angleToPulse(i));
     pwm.setPWM(shoulder2, 0, angleToPulse(180 - i));
 
     delay(150);
-    
   }
+
+  delay(3000);
+
+  for (int i = 160; i >= 100; i -= 5) {
+    pwm.setPWM(base, 0, angleToPulse(i));
+    delay(150);
+  }
+  delay(3000);
   
-  delay(5000);
-
-  for (int i = 0; i <= 90; ++i) {
-    pwm.setPWM(grip, i, angleToPulse(i));
-    delay(100);
-  }
-
-  delay(2000);
-
-  for (int i = 90; i >= 0; --i) {
-    pwm.setPWM(grip, i, angleToPulse(i));
-    delay(100);
-  }
-  delay(2000);
-
-  for(int i=90; i>=0; i-=5){
-  pwm.setPWM(farm, 0, angleToPulse(i));
-  delay(100);
-}
-
-delay(5000);
 
 }
